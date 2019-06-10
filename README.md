@@ -9,6 +9,7 @@
 
 > #### All awesome CI images
 >
+> [ansible](https://github.com/cytopia/docker-ansible) |
 > [ansible-lint](https://github.com/cytopia/docker-ansible-lint) |
 > [awesome-ci](https://github.com/cytopia/awesome-ci) |
 > [jsonlint](https://github.com/cytopia/docker-jsonlint) |
@@ -16,10 +17,11 @@
 > [yamllint](https://github.com/cytopia/docker-yamllint)
 
 
+View **[Dockerfile](https://github.com/cytopia/docker-ansible-lint/blob/master/Dockerfile)** on GitHub.
+
 [![Docker hub](http://dockeri.co/image/cytopia/ansible-lint)](https://hub.docker.com/r/cytopia/ansible-lint)
 
-
-Dockerized version of [ansible-lint](https://github.com/ansible/ansible-lint)<sup>[1]</sup>.
+Tiny Alpine-based multistage-build dockerized version of [ansible-lint](https://github.com/ansible/ansible-lint)<sup>[1]</sup>.
 The image is built nightly against the latest stable version of `ansible-lint` and pushed to Dockerhub.
 
 <sup>[1] Official project: https://github.com/ansible/ansible-lint</sup>
@@ -35,17 +37,17 @@ The image is built nightly against the latest stable version of `ansible-lint` a
 ## Docker mounts
 
 The working directory inside the Docker container is **`/data/`** and should be mounted locally to
-the root of your project where your `.ansible-lint` file is located.
+the root of your project where your `.ansible-lint` config file is located.
 
 
 ## Usage
 
 ```bash
 # Single playbook
-docker run --rm -v $(pwd):/data cytopia/ansible-lint playbook.yml
+docker run --rm -v $(pwd):/data cytopia/ansible-lint ansible-lint playbook.yml
 
 # All playbooks via wildcard
-docker run --rm -v $(pwd):/data cytopia/ansible-lint *.yml
+docker run --rm -v $(pwd):/data cytopia/ansible-lint ansible-lint *.yml
 ```
 
 
