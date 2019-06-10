@@ -22,10 +22,10 @@ test:
 				| sed 's/.*v//g' \
 		)"; \
 		echo "Testing for latest: $${LATEST}"; \
-		docker run --rm $(IMAGE) --version | grep -E "v?$${LATEST}$$"; \
+		docker run --rm $(IMAGE) ansible-lint --version | grep -E "v?$${LATEST}$$"; \
 	else \
 		echo "Testing for tag: $(TAG)"; \
-		docker run --rm $(IMAGE) --version | grep -E "v?$(TAG)$$"; \
+		docker run --rm $(IMAGE) ansible-lint --version | grep -E "v?$(TAG)$$"; \
 	fi
 
 tag:
