@@ -35,13 +35,13 @@ _test_version:
 				| sed 's/.*v//g' \
 		)"; \
 		echo "Testing for latest: $${LATEST}"; \
-		if ! docker run --rm $(IMAGE) ansible-lint --version | grep -E "v?$${LATEST}$$"; then \
+		if ! docker run --rm $(IMAGE) --version | grep -E "v?$${LATEST}$$"; then \
 			echo "Failed"; \
 			exit 1; \
 		fi; \
 	else \
 		echo "Testing for tag: $(TAG)"; \
-		if ! docker run --rm $(IMAGE) ansible-lint --version | grep -E "v?$(TAG)$$"; then \
+		if ! docker run --rm $(IMAGE) --version | grep -E "v?$(TAG)$$"; then \
 			echo "Failed"; \
 			exit 1; \
 		fi; \
@@ -52,7 +52,7 @@ _test_run:
 	@echo "------------------------------------------------------------"
 	@echo "- Testing playbook"
 	@echo "------------------------------------------------------------"
-	@if ! docker run --rm -v $(CURRENT_DIR)/tests:/data $(IMAGE) ansible-lint -v playbook.yml; then \
+	@if ! docker run --rm -v $(CURRENT_DIR)/tests:/data $(IMAGE) -v playbook.yml; then \
 		echo "Failed"; \
 		exit 1; \
 	fi; \

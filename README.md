@@ -46,10 +46,10 @@ the root of your project where your `.ansible-lint` config file is located.
 
 ```bash
 # Single playbook
-docker run --rm -v $(pwd):/data cytopia/ansible-lint ansible-lint playbook.yml
+docker run --rm -v $(pwd):/data cytopia/ansible-lint playbook.yml
 
 # All playbooks via wildcard
-docker run --rm -v $(pwd):/data cytopia/ansible-lint ansible-lint *.yml
+docker run --rm -v $(pwd):/data cytopia/ansible-lint *.yml
 ```
 
 

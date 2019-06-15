@@ -32,4 +32,5 @@ RUN set -x \
 COPY --from=builder /usr/lib/python3.6/site-packages/ /usr/lib/python3.6/site-packages/
 COPY --from=builder /usr/bin/ansible-lint /usr/bin/ansible-lint
 WORKDIR /data
-CMD ["ansible-lint"]
+ENTRYPOINT ["ansible-lint"]
+CMD ["--version"]
