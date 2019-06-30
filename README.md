@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.com/cytopia/docker-ansible-lint.svg?branch=master)](https://travis-ci.com/cytopia/docker-ansible-lint)
 [![Tag](https://img.shields.io/github/tag/cytopia/docker-ansible-lint.svg)](https://github.com/cytopia/docker-ansible-lint/releases)
-[![](https://images.microbadger.com/badges/version/cytopia/ansible-lint:latest.svg?kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
-[![](https://images.microbadger.com/badges/image/cytopia/ansible-lint:latest.svg?kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
+[![](https://images.microbadger.com/badges/version/cytopia/ansible-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
+[![](https://images.microbadger.com/badges/image/cytopia/ansible-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
 [![](https://img.shields.io/badge/github-cytopia%2Fdocker--ansible--lint-red.svg)](https://github.com/cytopia/docker-ansible-lint "github.com/cytopia/docker-ansible-lint")
 [![License](https://img.shields.io/badge/license-MIT-%233DA639.svg)](https://opensource.org/licenses/MIT)
 
@@ -34,7 +34,7 @@
 
 View **[Dockerfile](https://github.com/cytopia/docker-ansible-lint/blob/master/Dockerfile)** on GitHub.
 
-[![Docker hub](http://dockeri.co/image/cytopia/ansible-lint?kill_cache=1)](https://hub.docker.com/r/cytopia/ansible-lint)
+[![Docker hub](http://dockeri.co/image/cytopia/ansible-lint?&kill_cache=1)](https://hub.docker.com/r/cytopia/ansible-lint)
 
 Tiny Alpine-based multistage-build dockerized version of [ansible-lint](https://github.com/ansible/ansible-lint)<sup>[1]</sup>.
 The image is built nightly against the latest stable version of `ansible-lint` and pushed to Dockerhub.
