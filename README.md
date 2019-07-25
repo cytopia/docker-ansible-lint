@@ -66,6 +66,9 @@ docker run --rm -v $(pwd):/data cytopia/ansible-lint playbook.yml
 
 # All playbooks via wildcard
 docker run --rm -v $(pwd):/data cytopia/ansible-lint *.yml
+
+# Single role (run from within the role's root)
+docker run --rm -v "$(pwd)":"/data/$(basename "$(pwd)" )" -e ANSIBLE_ROLES_PATH="/data" cytopia/ansible-lint "/data/$(basename "$(pwd)" )/tests/test.yml"
 ```
 
 
