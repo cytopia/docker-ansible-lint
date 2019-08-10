@@ -38,7 +38,8 @@ _test-version:
 		LATEST="$$( \
 			curl -L -sS  https://github.com/ansible/ansible-lint/releases/latest/ \
 				| tac | tac \
-				| grep -Eo "ansible/ansible-lint/releases/tag/v[.0-9]+" \
+				| grep -Eo 'ansible/ansible-lint/releases/tag/v[.0-9]+"' \
+				| grep -Eo 'ansible/ansible-lint/releases/tag/v[.0-9]+' \
 				| head -1 \
 				| sed 's/.*v//g' \
 		)"; \
