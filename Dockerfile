@@ -8,7 +8,8 @@ RUN set -eux \
 		musl-dev \
 		openssl-dev \
 		python3 \
-		python3-dev
+		python3-dev \
+		bash
 
 ARG VERSION=latest
 RUN set -eux \
