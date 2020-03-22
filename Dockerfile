@@ -36,4 +36,4 @@ COPY --from=builder /usr/lib/python3.6/site-packages/ /usr/lib/python3.6/site-pa
 COPY --from=builder /usr/bin/ansible-lint /usr/bin/ansible-lint
 WORKDIR /data
 ENTRYPOINT ["ansible-lint"]
-CMD ["--version"]
+CMD ["."]
