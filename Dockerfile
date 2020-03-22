@@ -1,4 +1,4 @@
-FROM alpine:3.9 as builder
+FROM alpine:3.11 as builder
 
 RUN set -eux \
 	&& apk add --no-cache \
@@ -24,16 +24,16 @@ RUN set -eux \
 	&& find /usr/lib/ -name '*.pyc' -print0 | xargs -0 -n1 rm -rf
 
 
-FROM alpine:3.9 as production
+FROM alpine:3.11 as production
 LABEL \
 	maintainer="cytopia <cytopia@everythingcli.org>" \
 	repo="https://github.com/cytopia/docker-ansible-lint"
 RUN set -eux \
-	&& apk add --no-cache python3 \
+	&& apk add --no-cache bash python3 \
 	&& find /usr/lib/ -name '__pycache__' -print0 | xargs -0 -n1 rm -rf \
 	&& find /usr/lib/ -name '*.pyc' -print0 | xargs -0 -n1 rm -rf
-COPY --from=builder /usr/lib/python3.6/site-packages/ /usr/lib/python3.6/site-packages/
+COPY --from=builder /usr/lib/python3.8/site-packages/ /usr/lib/python3.8/site-packages/
 COPY --from=builder /usr/bin/ansible-lint /usr/bin/ansible-lint
 WORKDIR /data
 ENTRYPOINT ["ansible-lint"]
-CMD ["--version"]
+CMD ["."]
