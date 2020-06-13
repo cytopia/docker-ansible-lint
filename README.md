@@ -62,6 +62,7 @@ the root of your project where your `.ansible-lint` config file is located.
 
 ## Usage
 
+### Command line
 ```bash
 # Single playbook
 docker run --rm -v $(pwd):/data cytopia/ansible-lint playbook.yml
@@ -71,6 +72,26 @@ docker run --rm -v $(pwd):/data cytopia/ansible-lint *.yml
 
 # Single role (run from within the role's root)
 docker run --rm -v "$(pwd)":"/data/$(basename "$(pwd)" )" -e ANSIBLE_ROLES_PATH="/data" cytopia/ansible-lint "/data/$(basename "$(pwd)" )/tests/test.yml"
+```
+
+### GitLabCI
+GitLabCI requires a shell entrypoint to be specified. See here for details: [Issue #14](https://github.com/cytopia/docker-ansible-lint/issues/14).
+```yaml
+default:
+  image:
+    name: cytopia/ansible-lint:latest
+    entrypoint: ["/bin/sh", "-c"]
+
+stages:
+  - lint
+
+ansible-linter:
+  stage: lint
+  script:
+    - ansible-lint *.yaml
+  only:
+    - merge_requests
+    - master
 ```
 
 
