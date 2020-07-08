@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  connection: local
-  tasks:
-    - debug:
-        msg: Test
