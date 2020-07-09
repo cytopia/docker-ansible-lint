@@ -15,7 +15,7 @@ RUN set -eux \
 	&& if [ "${VERSION}" = "latest" ]; then \
 		pip3 install --no-cache-dir --no-compile ansible-lint; \
 	else \
-		pip3 install --no-cache-dir --no-compile "ansible-lint==${VERSION}>=${VERSION},<$(echo "${VERSION}+0.1" | bc)"; \
+		pip3 install --no-cache-dir --no-compile "ansible-lint==${VERSION}"; \
 	fi \
 	\
 	&& ansible-lint --version | head -1 | grep -E 'ansible-lint[[:space:]]+[0-9]+' \
