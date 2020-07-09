@@ -10,7 +10,7 @@ RUN set -eux \
 		python3 \
 		python3-dev
 
-ARG VERSION=latest
+ARG VERSION=4.1.0
 RUN set -eux \
 	&& if [ "${VERSION}" = "latest" ]; then \
 		pip3 install --no-cache-dir --no-compile ansible-lint; \
