@@ -10,7 +10,7 @@
  * https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-secret-in-the-cluster-that-holds-your-authorization-token
  */
 
-def label = "build-docker-ansible-lint-jdk11-${UUID.randomUUID().toString()}"
+def label = "build-ansible-lint-jdk11-${UUID.randomUUID().toString()}"
 def home = "/home/jenkins/agent"
 def workspace = "${home}/workspace/build-docker-ansible-lint-jdk11"
 def workdir = "${workspace}/src/github.com/rasautomation/docker-ansible-lint-jdk11/"
@@ -36,9 +36,9 @@ spec:
         mountPath: /kaniko/.docker/
     resources:
       limits:
-        ephemeral-storage: 10Gi
+        ephemeral-storage: 2Gi
       requests:
-        ephemeral-storage: 8Gi
+        ephemeral-storage: 2Gi
   volumes:
     - name: docker-config
       configMap:
