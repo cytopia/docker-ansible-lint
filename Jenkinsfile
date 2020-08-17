@@ -36,9 +36,9 @@ spec:
         mountPath: /kaniko/.docker/
     resources:
       limits:
-        ephemeral-storage: 1Gi
+        ephemeral-storage: 5Gi
       requests:
-        ephemeral-storage: 1Gi
+        ephemeral-storage: 2Gi
   volumes:
     - name: docker-config
       configMap:
