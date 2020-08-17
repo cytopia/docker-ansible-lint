@@ -36,9 +36,9 @@ spec:
         mountPath: /kaniko/.docker/
     resources:
       limits:
-        ephemeral-storage: 2Gi
+        ephemeral-storage: 1Gi
       requests:
-        ephemeral-storage: 2Gi
+        ephemeral-storage: 1Gi
   volumes:
     - name: docker-config
       configMap:
@@ -63,9 +63,9 @@ spec:
                     sh '''
                     #!/busybox/sh
                     /kaniko/executor \
-                        -f `pwd`/Dockerfile
-                        -c `pwd`
-                        --destination=181181305107.dkr.ecr.us-east-2.amazonaws.com/ansible-lint-jdk11:${VERSION}
+                        -f `pwd`/Dockerfile \
+                        -c `pwd` \
+                        --destination=287908807331.dkr.ecr.us-east-2.amazonaws.com/ansible-lint-jdk11:${VERSION}
                     '''
                 }
             }
