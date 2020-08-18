@@ -57,9 +57,12 @@ spec:
                         userRemoteConfigs: scm.userRemoteConfigs
                     ])
                 }
+                echo sh(script: 'env|sort', returnStdout: true)
             }
             stage('Docker Build docker-ansible-lint-jdk11') {
+                echo sh(script: 'env|sort', returnStdout: true)
                 container(name: 'kaniko', shell: '/busybox/sh') {
+                    echo sh(script: 'env|sort', returnStdout: true)
                     sh '''
                     #!/busybox/sh
                     /kaniko/executor \
