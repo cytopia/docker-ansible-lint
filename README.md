@@ -1,6 +1,5 @@
 # Docker image for `ansible-lint`
 
-[![Build Status](https://travis-ci.com/cytopia/docker-ansible-lint.svg?branch=master)](https://travis-ci.com/cytopia/docker-ansible-lint)
 [![Tag](https://img.shields.io/github/tag/cytopia/docker-ansible-lint.svg)](https://github.com/cytopia/docker-ansible-lint/releases)
 [![](https://images.microbadger.com/badges/version/cytopia/ansible-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
 [![](https://images.microbadger.com/badges/image/cytopia/ansible-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
@@ -8,11 +7,16 @@
 [![](https://img.shields.io/badge/github-cytopia%2Fdocker--ansible--lint-red.svg)](https://github.com/cytopia/docker-ansible-lint "github.com/cytopia/docker-ansible-lint")
 [![License](https://img.shields.io/badge/license-MIT-%233DA639.svg)](https://opensource.org/licenses/MIT)
 
+[![lint](https://github.com/cytopia/docker-ansible-lint/workflows/lint/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Alint)
+[![build](https://github.com/cytopia/docker-ansible-lint/workflows/build/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Abuild)
+[![nightly](https://github.com/cytopia/docker-ansible-lint/workflows/nightly/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Anightly)
+
 > #### All [#awesome-ci](https://github.com/topics/awesome-ci) Docker images
 >
-> [ansible][ansible-git-lnk] **•**
 > [ansible-lint][alint-git-lnk] **•**
+> [ansible][ansible-git-lnk] **•**
 > [awesome-ci][aci-git-lnk] **•**
+> [bandit][bandit-git-lnk] **•**
 > [black][black-git-lnk] **•**
 > [checkmake][cm-git-lnk] **•**
 > [eslint][elint-git-lnk] **•**
@@ -21,18 +25,19 @@
 > [goimports][gimp-git-lnk] **•**
 > [golint][glint-git-lnk] **•**
 > [jsonlint][jlint-git-lnk] **•**
+> [kubeval][kubeval-git-lnk] **•**
 > [linkcheck][linkcheck-git-lnk] **•**
 > [mypy][mypy-git-lnk] **•**
+> [php-cs-fixer][pcsf-git-lnk] **•**
 > [phpcbf][pcbf-git-lnk] **•**
 > [phpcs][pcs-git-lnk] **•**
 > [phplint][plint-git-lnk] **•**
-> [php-cs-fixer][pcsf-git-lnk] **•**
 > [pycodestyle][pycs-git-lnk] **•**
 > [pydocstyle][pyds-git-lnk] **•**
 > [pylint][pylint-git-lnk] **•**
 > [terraform-docs][tfdocs-git-lnk] **•**
-> [terragrunt][tg-git-lnk] **•**
 > [terragrunt-fmt][tgfmt-git-lnk] **•**
+> [terragrunt][tg-git-lnk] **•**
 > [yamlfmt][yfmt-git-lnk] **•**
 > [yamllint][ylint-git-lnk]
 
@@ -52,9 +57,29 @@ The image is built nightly against the latest stable version of `ansible-lint` a
 
 ## Available Docker image versions
 
-| Docker tag | Build from |
-|------------|------------|
-| `latest`   | Current stable ansible-lint version |
+#### Rolling releaess
+
+The following Docker image tags are rolling releases and are built and updated every night.
+
+[![nightly](https://github.com/cytopia/docker-ansible-lint/workflows/nightly/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Anightly)
+
+| Docker tag | Explanation                   |
+|------------|-------------------------------|
+| `latest`   | Latest stable version         |
+| `5`        | Latest stable `5.x.x` version |
+| `4`        | Latest stable `4.x.x` version |
+
+#### Point in time releases
+
+The following Docker image tags are built once and can be used for reproducible builds. Its version never changes so you will have to update tags in your pipelines from time to time in order to stay up-to-date.
+
+[![build](https://github.com/cytopia/docker-ansible-lint/workflows/build/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Abuild)
+
+| Docker tag      | Explanation                                                       |
+|-----------------|-------------------------------------------------------------------|
+| `latest-<TAG>`  | Latest stable version when this repository was git tagged         |
+| `5-<TAG>`       | Latest stable `5.x.x` version when this repository was git tagged |
+| `4-<TAG>`       | Latest stable `4.x.x` version when this repository was git tagged |
 
 
 ## Docker mounts
@@ -117,11 +142,13 @@ linter below for reproducible local or remote CI tests:
 | [golint][glint-git-lnk]          | [![glint-hub-img]][glint-hub-lnk]     | Go         | Lint Go code |
 | [eslint][elint-git-lnk]          | [![elint-hub-img]][elint-hub-lnk]     | Javascript | Lint Javascript code |
 | [jsonlint][jlint-git-lnk]        | [![jlint-hub-img]][jlint-hub-lnk]     | JSON       | Lint JSON files **<sup>[1]</sup>** |
+| [kubeval][kubeval-git-lnk]       | [![kubeval-hub-img]][kubeval-hub-lnk] | K8s        | Lint Kubernetes files |
 | [checkmake][cm-git-lnk]          | [![cm-hub-img]][cm-hub-lnk]           | Make       | Lint Makefiles |
 | [phpcbf][pcbf-git-lnk]           | [![pcbf-hub-img]][pcbf-hub-lnk]       | PHP        | PHP Code Beautifier and Fixer |
 | [phpcs][pcs-git-lnk]             | [![pcs-hub-img]][pcs-hub-lnk]         | PHP        | PHP Code Sniffer |
 | [phplint][plint-git-lnk]         | [![plint-hub-img]][plint-hub-lnk]     | PHP        | PHP Code Linter **<sup>[1]</sup>** |
 | [php-cs-fixer][pcsf-git-lnk]     | [![pcsf-hub-img]][pcsf-hub-lnk]       | PHP        | PHP Coding Standards Fixer |
+| [bandit][bandit-git-lnk]         | [![bandit-hub-img]][bandit-hub-lnk]   | Python     | A security linter from PyCQA
 | [black][black-git-lnk]           | [![black-hub-img]][black-hub-lnk]     | Python     | The uncompromising Python code formatter |
 | [mypy][mypy-git-lnk]             | [![mypy-hub-img]][mypy-hub-lnk]       | Python     | Static source code analysis |
 | [pycodestyle][pycs-git-lnk]      | [![pycs-hub-img]][pycs-hub-lnk]       | Python     | Python style guide checker |
@@ -159,6 +186,10 @@ linter below for reproducible local or remote CI tests:
 [alint-hub-img]: https://img.shields.io/docker/pulls/cytopia/ansible-lint.svg
 [alint-hub-lnk]: https://hub.docker.com/r/cytopia/ansible-lint
 
+[kubeval-git-lnk]: https://github.com/cytopia/docker-kubeval
+[kubeval-hub-img]: https://img.shields.io/docker/pulls/cytopia/kubeval.svg
+[kubeval-hub-lnk]: https://hub.docker.com/r/cytopia/kubeval
+
 [gfmt-git-lnk]: https://github.com/cytopia/docker-gofmt
 [gfmt-hub-img]: https://img.shields.io/docker/pulls/cytopia/gofmt.svg
 [gfmt-hub-lnk]: https://hub.docker.com/r/cytopia/gofmt
@@ -194,6 +225,10 @@ linter below for reproducible local or remote CI tests:
 [pcsf-git-lnk]: https://github.com/cytopia/docker-php-cs-fixer
 [pcsf-hub-img]: https://img.shields.io/docker/pulls/cytopia/php-cs-fixer.svg
 [pcsf-hub-lnk]: https://hub.docker.com/r/cytopia/php-cs-fixer
+
+[bandit-git-lnk]: https://github.com/cytopia/docker-bandit
+[bandit-hub-img]: https://img.shields.io/docker/pulls/cytopia/bandit.svg
+[bandit-hub-lnk]: https://hub.docker.com/r/cytopia/bandit
 
 [black-git-lnk]: https://github.com/cytopia/docker-black
 [black-hub-img]: https://img.shields.io/docker/pulls/cytopia/black.svg

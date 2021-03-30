@@ -2,5 +2,6 @@
 - hosts: localhost
   connection: local
   tasks:
-    - debug:
+    - name: debug this
+      debug:
         msg: Test
