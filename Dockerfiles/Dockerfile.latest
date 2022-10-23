@@ -1,10 +1,11 @@
-FROM alpine:3.13 as builder
+FROM alpine:3.16 as builder
 
 RUN set -eux \
 	&& apk add --no-cache \
 		bc \
 		cargo \
 		gcc \
+		git \
 		libffi-dev \
 		musl-dev \
 		openssl-dev \
@@ -29,7 +30,7 @@ RUN set -eux \
 	&& find /usr/lib/ -name '*.pyc' -print0 | xargs -0 -n1 rm -rf
 
 
-FROM alpine:3.13 as production
+FROM alpine:3.16 as production
 ARG VERSION
 # https://github.com/opencontainers/image-spec/blob/master/annotations.md
 #LABEL "org.opencontainers.image.created"=""
@@ -51,22 +52,15 @@ RUN set -eux \
 		bash \
 		git \
 		python3 \
-	&& ln -sf ansible /usr/bin/ansible-config \
-	&& ln -sf ansible /usr/bin/ansible-console \
-	&& ln -sf ansible /usr/bin/ansible-doc \
-	&& ln -sf ansible /usr/bin/ansible-galaxy \
-	&& ln -sf ansible /usr/bin/ansible-inventory \
-	&& ln -sf ansible /usr/bin/ansible-playbook \
-	&& ln -sf ansible /usr/bin/ansible-pull \
-	&& ln -sf ansible /usr/bin/ansible-test \
-	&& ln -sf ansible /usr/bin/ansible-vault \
 	&& find /usr/lib/ -name '__pycache__' -print0 | xargs -0 -n1 rm -rf \
 	&& find /usr/lib/ -name '*.pyc' -print0 | xargs -0 -n1 rm -rf
 
-COPY --from=builder /usr/lib/python3.8/site-packages/ /usr/lib/python3.8/site-packages/
+COPY --from=builder /usr/lib/python3.10/site-packages/ /usr/lib/python3.10/site-packages/
 COPY --from=builder /usr/bin/ansible-lint /usr/bin/ansible-lint
 COPY --from=builder /usr/bin/ansible /usr/bin/ansible
+COPY --from=builder /usr/bin/ansible-config /usr/bin/ansible-config
 COPY --from=builder /usr/bin/ansible-connection /usr/bin/ansible-connection
+COPY --from=builder /usr/bin/ansible-playbook /usr/bin/ansible-playbook
 
 RUN set -eux \
 	&& ansible-lint --version | head -1 | grep -E 'ansible-lint[[:space:]]+[0-9]+' \
