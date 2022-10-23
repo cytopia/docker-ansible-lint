@@ -42,8 +42,7 @@
 View **[Dockerfiles](https://github.com/cytopia/docker-ansible-lint/blob/master/Dockerfiles/)** on GitHub.
 
 
-**Available Architectures:**  `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6`
-
+**Available Architectures:**  `amd64`, `i386`, `arm64`
 
 
 Tiny Alpine-based multistage-build dockerized version of [ansible-lint](https://github.com/ansible/ansible-lint)<sup>[1]</sup>.
@@ -62,14 +61,14 @@ The following Docker image tags are rolling releases and are built and updated e
 
 | Docker Tag           | Git Ref   | Ansible Lint | Flavour | Available Architectures                      |
 |----------------------|-----------|--------------|---------|----------------------------------------------|
-| `latest`             | master    | latest       | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine`             | master    | latest       | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `latest`             | master    | latest       | default | `amd64`, `i386`, `arm64`                     |
+| `alpine`             | master    | latest       | Alpine  | `amd64`, `i386`, `arm64`                     |
 |                      |           |              |         |                                              |
-| `6`                  | master    | **`6.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-6`           | master    | **`6.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `6`                  | master    | **`6.x.x`**  | default | `amd64`, `i386`, `arm64`                     |
+| `alpine-6`           | master    | **`6.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`                     |
 |                      |           |              |         |                                              |
-| `5`                  | master    | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-5`           | master    | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `5`                  | master    | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`                     |
+| `alpine-5`           | master    | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`                     |
 
 #### Point in time releases
 
@@ -79,14 +78,14 @@ The following Docker image tags are built once and can be used for reproducible 
 
 | Docker Tag           | Git Ref   | Ansible Lint | Flavour | Available Architectures                      |
 |----------------------|-----------|--------------|---------|----------------------------------------------|
-| `latest-0.7`         | tag: 0.7  | latest       | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-latest-0.7 ` | tag: 0.7  | latest       | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `latest-0.7`         | tag: 0.7  | latest       | default | `amd64`, `i386`, `arm64`                     |
+| `alpine-latest-0.7 ` | tag: 0.7  | latest       | Alpine  | `amd64`, `i386`, `arm64`                     |
 |                      |           |              |         |                                              |
-| `6-0.7`              | tag: 0.7  | **`6.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-6-0.7`       | tag: 0.7  | **`6.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `6-0.7`              | tag: 0.7  | **`6.x.x`**  | default | `amd64`, `i386`, `arm64`                     |
+| `alpine-6-0.7`       | tag: 0.7  | **`6.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`                     |
 |                      |           |              |         |                                              |
-| `5-0.7`              | tag: 0.7  | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-5-0.7`       | tag: 0.7  | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `5-0.7`              | tag: 0.7  | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`                     |
+| `alpine-5-0.7`       | tag: 0.7  | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`                     |
 
 
 ## :open_file_folder: Docker mounts
