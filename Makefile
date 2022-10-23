@@ -84,7 +84,7 @@ build: ARGS=--build-arg VERSION=$(VERSION)
 build: docker-arch-build
 
 .PHONY: rebuild
-build: ARGS=--build-arg VERSION=$(VERSION)
+rebuild: ARGS=--build-arg VERSION=$(VERSION)
 rebuild: docker-arch-rebuild
 
 .PHONY: push
@@ -124,13 +124,13 @@ _test-version:
 				| sed 's/.*v//g' \
 		)"; \
 		echo "Testing for latest: $${LATEST}"; \
-		if ! docker run --rm $(IMAGE) --version | grep -E "^ansible-lint $${LATEST}\s"; then \
+		if ! docker run --platform $(ARCH) --rm $(IMAGE):$(DOCKER_TAG) --version | grep -E "^ansible-lint $${LATEST}\s"; then \
 			echo "Failed"; \
 			exit 1; \
 		fi; \
 	else \
 		echo "Testing for tag: $(VERSION)"; \
-		if ! docker run --rm $(IMAGE) --version | grep -E "ansible-lint $(VERSION)[.0-9]+"; then \
+		if ! docker run --platform $(ARCH) --rm $(IMAGE):$(DOCKER_TAG) --version | grep -E "ansible-lint $(VERSION)[.0-9]+"; then \
 			echo "Failed"; \
 			exit 1; \
 		fi; \
@@ -142,7 +142,7 @@ _test-run:
 	@echo "------------------------------------------------------------"
 	@echo "- Testing playbook"
 	@echo "------------------------------------------------------------"
-	@if ! docker run --rm -v $(CURRENT_DIR)/tests:/data $(IMAGE) -v playbook.yml; then \
+	if ! docker run --platform $(ARCH) --rm -v $(CURRENT_DIR)/tests:/data $(IMAGE):$(DOCKER_TAG) -v playbook.yml; then \
 		echo "Failed"; \
 		exit 1; \
 	fi; \

@@ -70,9 +70,6 @@ The following Docker image tags are rolling releases and are built and updated e
 |                      |           |              |         |                                              |
 | `5`                  | master    | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
 | `alpine-5`           | master    | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-|                      |           |              |         |                                              |
-| `4`                  | master    | **`4.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-4`           | master    | **`4.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
 
 #### Point in time releases
 
@@ -90,9 +87,6 @@ The following Docker image tags are built once and can be used for reproducible 
 |                      |           |              |         |                                              |
 | `5-0.7`              | tag: 0.7  | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
 | `alpine-5-0.7`       | tag: 0.7  | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-|                      |           |              |         |                                              |
-| `4-0.7`              | tag: 0.7  | **`4.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
-| `alpine-4-0.7`       | tag: 0.7  | **`4.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
 
 
 ## :open_file_folder: Docker mounts
