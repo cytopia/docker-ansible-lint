@@ -1,15 +1,13 @@
 # Docker image for `ansible-lint`
 
 [![Tag](https://img.shields.io/github/tag/cytopia/docker-ansible-lint.svg)](https://github.com/cytopia/docker-ansible-lint/releases)
-[![](https://images.microbadger.com/badges/version/cytopia/ansible-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
-[![](https://images.microbadger.com/badges/image/cytopia/ansible-lint:latest.svg?&kill_cache=1)](https://microbadger.com/images/cytopia/ansible-lint:latest "ansible-lint")
-[![](https://img.shields.io/docker/pulls/cytopia/ansible-lint.svg)](https://hub.docker.com/r/cytopia/ansible-lint)
 [![](https://img.shields.io/badge/github-cytopia%2Fdocker--ansible--lint-red.svg)](https://github.com/cytopia/docker-ansible-lint "github.com/cytopia/docker-ansible-lint")
 [![License](https://img.shields.io/badge/license-MIT-%233DA639.svg)](https://opensource.org/licenses/MIT)
 
 [![lint](https://github.com/cytopia/docker-ansible-lint/workflows/lint/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Alint)
 [![build](https://github.com/cytopia/docker-ansible-lint/workflows/build/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Abuild)
 [![nightly](https://github.com/cytopia/docker-ansible-lint/workflows/nightly/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Anightly)
+
 
 > #### All [#awesome-ci](https://github.com/topics/awesome-ci) Docker images
 >
@@ -41,21 +39,20 @@
 > [yamlfmt][yfmt-git-lnk] **•**
 > [yamllint][ylint-git-lnk]
 
-> #### All [#awesome-ci](https://github.com/topics/awesome-ci) Makefiles
->
-> Visit **[cytopia/makefiles](https://github.com/cytopia/makefiles)** for seamless project integration, minimum required best-practice code linting and CI.
+View **[Dockerfiles](https://github.com/cytopia/docker-ansible-lint/blob/master/Dockerfiles/)** on GitHub.
 
-View **[Dockerfile](https://github.com/cytopia/docker-ansible-lint/blob/master/Dockerfile)** on GitHub.
 
-[![Docker hub](http://dockeri.co/image/cytopia/ansible-lint?&kill_cache=1)](https://hub.docker.com/r/cytopia/ansible-lint)
+**Available Architectures:**  `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6`
+
+
 
 Tiny Alpine-based multistage-build dockerized version of [ansible-lint](https://github.com/ansible/ansible-lint)<sup>[1]</sup>.
 The image is built nightly against the latest stable version of `ansible-lint` and pushed to Dockerhub.
 
 <sup>[1] Official project: https://github.com/ansible/ansible-lint</sup>
 
-
-## Available Docker image versions
+[![](https://img.shields.io/docker/pulls/cytopia/ansible-lint.svg)](https://hub.docker.com/r/cytopia/ansible-lint)
+[![Docker](https://badgen.net/badge/icon/:latest?icon=docker&label=cytopia/ansible-lint)](https://hub.docker.com/r/cytopia/ansible-lint)
 
 #### Rolling releaess
 
@@ -63,11 +60,19 @@ The following Docker image tags are rolling releases and are built and updated e
 
 [![nightly](https://github.com/cytopia/docker-ansible-lint/workflows/nightly/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Anightly)
 
-| Docker tag | Explanation                   |
-|------------|-------------------------------|
-| `latest`   | Latest stable version         |
-| `5`        | Latest stable `5.x.x` version |
-| `4`        | Latest stable `4.x.x` version |
+| Docker Tag           | Git Ref   | Ansible Lint | Flavour | Available Architectures                      |
+|----------------------|-----------|--------------|---------|----------------------------------------------|
+| `latest`             | master    | latest       | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine`             | master    | latest       | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+|                      |           |              |         |                                              |
+| `6`                  | master    | **`6.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-6`           | master    | **`6.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+|                      |           |              |         |                                              |
+| `5`                  | master    | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-5`           | master    | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+|                      |           |              |         |                                              |
+| `4`                  | master    | **`4.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-4`           | master    | **`4.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
 
 #### Point in time releases
 
@@ -75,22 +80,30 @@ The following Docker image tags are built once and can be used for reproducible 
 
 [![build](https://github.com/cytopia/docker-ansible-lint/workflows/build/badge.svg)](https://github.com/cytopia/docker-ansible-lint/actions?query=workflow%3Abuild)
 
-| Docker tag      | Explanation                                                       |
-|-----------------|-------------------------------------------------------------------|
-| `latest-<TAG>`  | Latest stable version when this repository was git tagged         |
-| `5-<TAG>`       | Latest stable `5.x.x` version when this repository was git tagged |
-| `4-<TAG>`       | Latest stable `4.x.x` version when this repository was git tagged |
+| Docker Tag           | Git Ref   | Ansible Lint | Flavour | Available Architectures                      |
+|----------------------|-----------|--------------|---------|----------------------------------------------|
+| `latest-0.7`         | tag: 0.7  | latest       | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-latest-0.7 ` | tag: 0.7  | latest       | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+|                      |           |              |         |                                              |
+| `6-0.7`              | tag: 0.7  | **`6.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-6-0.7`       | tag: 0.7  | **`6.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+|                      |           |              |         |                                              |
+| `5-0.7`              | tag: 0.7  | **`5.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-5-0.7`       | tag: 0.7  | **`5.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+|                      |           |              |         |                                              |
+| `4-0.7`              | tag: 0.7  | **`4.x.x`**  | default | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
+| `alpine-4-0.7`       | tag: 0.7  | **`4.x.x`**  | Alpine  | `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6` |
 
 
-## Docker mounts
+## :open_file_folder: Docker mounts
 
 The working directory inside the Docker container is **`/data/`** and should be mounted locally to
 the root of your project where your `.ansible-lint` config file is located.
 
 
-## Usage
+## :computer: Usage
 
-### Command line
+#### Display usage
 ```bash
 # Single playbook
 docker run --rm -v $(pwd):/data cytopia/ansible-lint playbook.yml
@@ -123,7 +136,7 @@ ansible-linter:
 ```
 
 
-## Related [#awesome-ci](https://github.com/topics/awesome-ci) projects
+## :arrows_counterclockwise: Related [#awesome-ci](https://github.com/topics/awesome-ci) projects
 
 ### Docker images
 
@@ -277,7 +290,8 @@ Visit **[cytopia/makefiles](https://github.com/cytopia/makefiles)** for dependen
 The provided Makefiles will only require GNU Make and Docker itself removing the need to install anything else.
 
 
-## License
+## :page_facing_up: License
+
 
 **[MIT License](LICENSE)**
 

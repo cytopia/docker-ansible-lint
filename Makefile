@@ -2,105 +2,113 @@ ifneq (,)
 .error This Makefile requires GNU Make.
 endif
 
-.PHONY: lint build rebuild test tag login push pull-base-image enter
-
-CURRENT_DIR = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
-DIR = .
-FILE = Dockerfile
-IMAGE = cytopia/ansible-lint
-VERSION = latest
-TAG = latest
-NO_CACHE =
-
-
-# --------------------------------------------------------------------------------------------------
-# Default Target
-# --------------------------------------------------------------------------------------------------
-help:
-	@echo "lint                      Lint project files and repository"
-	@echo "build   [VERSION=...]     Build bandit docker image"
-	@echo "rebuild [VERSION=...]     Build bandit docker image without cache"
-	@echo "test    [VERSION=...]     Test built bandit docker image"
-	@echo "tag TAG=...               Retag Docker image"
-	@echo "login USER=... PASS=...   Login to Docker hub"
-	@echo "push [TAG=...]            Push Docker image to Docker hub"
-
-
-# --------------------------------------------------------------------------------------------------
-# Lint Targets
-# --------------------------------------------------------------------------------------------------
-lint: _lint-files
-lint: _lint-workflow
-
-.PHONY: _lint-workflow
-_lint-workflow:
-	@echo "################################################################################"
-	@echo "# Lint Workflow"
-	@echo "################################################################################"
-	@\
-	GIT_CURR_MAJOR="$$( git tag | sort -V | tail -1 | sed 's|\.[0-9]*$$||g' )"; \
-	GIT_CURR_MINOR="$$( git tag | sort -V | tail -1 | sed 's|^[0-9]*\.||g' )"; \
-	GIT_NEXT_TAG="$${GIT_CURR_MAJOR}.$$(( GIT_CURR_MINOR + 1 ))"; \
-	AVAILABLE_REFS="$$( \
-		grep 'refs:' -A 100 .github/workflows/nightly.yml \
-		| grep 'steps:' -B 100 \
-		| grep -E '[[:space:]]+\-' \
-		| sed 's/.*\s//g' \
-		| sed "s/'//g" \
-		| sed 's/"//g' \
-		| grep -v master || true \
-	)"; \
-	if [ -n "$${AVAILABLE_REFS}" ]; then \
-		if ! grep 'refs:' -A 100 .github/workflows/nightly.yml \
-			| grep  "          - '$${GIT_NEXT_TAG}'" >/dev/null; then \
-			echo "[ERR] New Tag required in .github/workflows/nightly.yml: $${GIT_NEXT_TAG}"; \
-				exit 1; \
-			else \
-			echo "[OK] Git Tag present in .github/workflows/nightly.yml: $${GIT_NEXT_TAG}"; \
-		fi \
-	else \
-		echo "[OK] No Tags defined at all in .github/workflows/nightly.yml"; \
+# Ensure additional Makefiles are present
+MAKEFILES = Makefile.docker Makefile.lint
+$(MAKEFILES): URL=https://raw.githubusercontent.com/devilbox/makefiles/master/$(@)
+$(MAKEFILES):
+	@if ! (curl --fail -sS -o $(@) $(URL) || wget -O $(@) $(URL)); then \
+		echo "Error, curl or wget required."; \
+		echo "Exiting."; \
+		false; \
 	fi
+include $(MAKEFILES)
+
+# Set default Target
+.DEFAULT_GOAL := help
+
+
+# -------------------------------------------------------------------------------------------------
+# Default configuration
+# -------------------------------------------------------------------------------------------------
+# Own vars
+TAG        = latest
+
+# Makefile.docker overwrites
+NAME       = ansible-lint
+VERSION    = latest
+IMAGE      = cytopia/ansible-lint
+FLAVOUR    = latest
+FILE       = Dockerfile.${FLAVOUR}
+DIR        = Dockerfiles
+
+# Building from master branch: Tag == 'latest'
+ifeq ($(strip $(TAG)),latest)
+	ifeq ($(strip $(VERSION)),latest)
+		DOCKER_TAG = $(FLAVOUR)
+	else
+		ifeq ($(strip $(FLAVOUR)),latest)
+			DOCKER_TAG = $(VERSION)
+		else
+			DOCKER_TAG = $(FLAVOUR)-$(VERSION)
+		endif
+	endif
+# Building from any other branch or tag: Tag == '<REF>'
+else
+	ifeq ($(strip $(FLAVOUR)),latest)
+		DOCKER_TAG = $(VERSION)-$(TAG)
+	else
+		DOCKER_TAG = $(FLAVOUR)-$(VERSION)-$(TAG)
+	endif
+endif
+ARCH       = linux/amd64
+
+# Makefile.lint overwrites
+FL_IGNORES  = .git/,.github/,tests/,Dockerfiles/data/
+SC_IGNORES  = .git/,.github/,tests/
+JL_IGNORES  = .git/,.github/
+
+
+# -------------------------------------------------------------------------------------------------
+#  Default Target
+# -------------------------------------------------------------------------------------------------
+.PHONY: help
+help:
+	@echo "lint                                     Lint project files and repository"
+	@echo
+	@echo "build [ARCH=...] [TAG=...]               Build Docker image"
+	@echo "rebuild [ARCH=...] [TAG=...]             Build Docker image without cache"
+	@echo "push [ARCH=...] [TAG=...]                Push Docker image to Docker hub"
+	@echo
+	@echo "manifest-create [ARCHES=...] [TAG=...]   Create multi-arch manifest"
+	@echo "manifest-push [TAG=...]                  Push multi-arch manifest"
+	@echo
+	@echo "test [ARCH=...]                          Test built Docker image"
 	@echo
 
-.PHONY: lint-files
-_lint-files:
-	@echo "################################################################################"
-	@echo "# Lint Files"
-	@echo "################################################################################"
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-cr --text --ignore '.git/,.github/,tests/' --path .
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-crlf --text --ignore '.git/,.github/,tests/' --path .
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-trailing-single-newline --text --ignore '.git/,.github/,tests/' --path .
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-trailing-space --text --ignore '.git/,.github/,tests/' --path .
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-utf8 --text --ignore '.git/,.github/,tests/' --path .
-	@docker run --rm -v $(CURRENT_DIR):/data cytopia/file-lint file-utf8-bom --text --ignore '.git/,.github/,tests/' --path .
+
+# -------------------------------------------------------------------------------------------------
+#  Docker Targets
+# -------------------------------------------------------------------------------------------------
+.PHONY: build
+build: ARGS=--build-arg VERSION=$(VERSION)
+build: docker-arch-build
+
+.PHONY: rebuild
+build: ARGS=--build-arg VERSION=$(VERSION)
+rebuild: docker-arch-rebuild
+
+.PHONY: push
+push: docker-arch-push
 
 
-# --------------------------------------------------------------------------------------------------
-# Build Targets
-# --------------------------------------------------------------------------------------------------
-build:
-	docker build $(NO_CACHE) \
-		--build-arg VERSION=$(VERSION) \
-		--label "org.opencontainers.image.created"="$$(date --rfc-3339=s)" \
-		--label "org.opencontainers.image.revision"="$$(git rev-parse HEAD)" \
-		--label "org.opencontainers.image.version"="${VERSION}" \
-		-t $(IMAGE) \
-		-f $(DIR)/$(FILE) $(DIR)
+# -------------------------------------------------------------------------------------------------
+#  Manifest Targets
+# -------------------------------------------------------------------------------------------------
+.PHONY: manifest-create
+manifest-create: docker-manifest-create
 
-rebuild: pull-base-image
-rebuild: NO_CACHE=--no-cache
-rebuild: build
+.PHONY: manifest-push
+manifest-push: docker-manifest-push
 
 
-# --------------------------------------------------------------------------------------------------
-# Test Targets
-# --------------------------------------------------------------------------------------------------
-test:
-	@$(MAKE) --no-print-directory _test-version
-	@$(MAKE) --no-print-directory _test-run
+# -------------------------------------------------------------------------------------------------
+#  Test Targets
+# -------------------------------------------------------------------------------------------------
+.PHONY: test
+test: _test-version
+test: _test-run
 
+.PHONY: _test-version
 _test-version:
 	@echo "------------------------------------------------------------"
 	@echo "- Testing correct version"
@@ -129,6 +137,7 @@ _test-version:
 	fi; \
 	echo "Success"; \
 
+.PHONY: _test-run
 _test-run:
 	@echo "------------------------------------------------------------"
 	@echo "- Testing playbook"
@@ -138,28 +147,3 @@ _test-run:
 		exit 1; \
 	fi; \
 	echo "Success";
-
-
-# -------------------------------------------------------------------------------------------------
-#  Deploy Targets
-# -------------------------------------------------------------------------------------------------
-tag:
-	docker tag $(IMAGE) $(IMAGE):$(TAG)
-
-login:
-	@yes | docker login --username $(USER) --password $(PASS)
-
-push:
-	docker push $(IMAGE):$(TAG)
-
-
-# -------------------------------------------------------------------------------------------------
-#  Helper Targets
-# -------------------------------------------------------------------------------------------------
-pull-base-image:
-	@grep -E '^\s*FROM' Dockerfile \
-		| sed -e 's/^FROM//g' -e 's/[[:space:]]*as[[:space:]]*.*$$//g' \
-		| xargs -n1 docker pull;
-
-enter:
-	docker run --rm --name $(subst /,-,$(IMAGE)) -it --entrypoint=/bin/sh $(ARG) $(IMAGE):$(TAG)
