@@ -60,6 +60,7 @@ COPY --from=builder /usr/bin/ansible-lint /usr/bin/ansible-lint
 COPY --from=builder /usr/bin/ansible /usr/bin/ansible
 COPY --from=builder /usr/bin/ansible-config /usr/bin/ansible-config
 COPY --from=builder /usr/bin/ansible-connection /usr/bin/ansible-connection
+COPY --from=builder /usr/bin/ansible-galaxy /usr/bin/ansible-galaxy
 COPY --from=builder /usr/bin/ansible-playbook /usr/bin/ansible-playbook
 
 RUN set -eux \
